@@ -1,0 +1,4 @@
+library_id,molecule_h5,time
+E12_germ_cells,E12_germ_cells/outs/molecule_info.h5,E12
+E14_germ_cells,E14_germ_cells/outs/molecule_info.h5,E14
+E16_germ_cells,E16_germ_cells/outs/molecule_info.h5,E16
