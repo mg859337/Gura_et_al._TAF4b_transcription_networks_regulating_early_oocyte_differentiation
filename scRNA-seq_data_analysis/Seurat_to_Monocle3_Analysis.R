@@ -85,12 +85,8 @@ plot_cells(my.cds)
 plot_cells(my.cds, genes="Taf4b")
 plot_cells(my.cds, genes=c("Dazl", "Stra8", "Taf4b", "Figla"))
 
-my.cds <- reduce_dimension(my.cds, reduction_method="tSNE")
-plot_cells(my.cds, reduction_method="tSNE")
-
 ## Step 3: Cluster the cells
 my.cds <- cluster_cells(my.cds)
-plot_cells(my.cds, color_cells_by="cluster", group_cells_by="cluster",label_cell_groups = F,label_groups_by_cluster = F)
 plot_cells(my.cds, color_cells_by="Time", group_cells_by="cluster",label_cell_groups = F,label_groups_by_cluster = F)
 
 my.cds <- learn_graph(my.cds)
@@ -104,26 +100,6 @@ plot_cells(my.cds,
 
 pr_graph_test_res <- graph_test(my.cds, neighbor_graph="knn", cores=8)
 pr_deg_ids <- row.names(subset(pr_graph_test_res, q_value < 0.05))
-
-gene_module_df <- find_gene_modules(my.cds[pr_deg_ids,], resolution=1e-3)
-list <- filter(gene_module_df, gene_module_df$module == "12")
-
-cell_group_df <- tibble::tibble(cell=row.names(colData(my.cds)), 
-                                cell_group=clusters(my.cds)[colnames(my.cds)])
-agg_mat <- aggregate_gene_expression(my.cds, gene_module_df, cell_group_df)
-row.names(agg_mat) <- stringr::str_c("Module ", row.names(agg_mat))
-colnames(agg_mat) <- stringr::str_c("Cluster ", colnames(agg_mat))
-
-pheatmap::pheatmap(agg_mat, cluster_rows=TRUE, cluster_cols=TRUE,
-                   scale="column", clustering_method="ward.D2",
-                   fontsize=6)
-
-plot_cells(cds_sub, 
-           genes=gene_module_df,
-           group_cells_by="cluster",
-           color_cells_by="cluster",
-           show_trajectory_graph=FALSE)
-
 
 my_genes <- c("Figla", "Stra8","Taf4","Taf4b")
 my_germ_cds <- my.cds[rowData(my.cds)$gene_short_name %in% my_genes]
