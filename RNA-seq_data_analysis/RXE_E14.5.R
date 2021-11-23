@@ -43,7 +43,6 @@ RXE <- Xmeans - Ameans
 
 
 # Time to make the plot!
-# Fix the labels
 RXELabels <- c("Def","Def","Def","Def","Wt/Het","Wt/Het","Wt/Het","Wt/Het","Wt/Het","Wt/Het")
 
 newRXE <- cbind(RXELabels, rownames(RXE), data.frame(RXE, row.names=NULL))
