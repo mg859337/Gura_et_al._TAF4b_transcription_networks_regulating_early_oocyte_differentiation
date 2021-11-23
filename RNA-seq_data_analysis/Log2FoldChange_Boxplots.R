@@ -27,4 +27,3 @@ p <- ggplot(reformatted, aes(x= factor(Chromosome, level = level_order), y=log2F
  coord_cartesian(ylim=c(-1.5, 1.5)) +
  xlab("Chromosome")
 p
-p
